@@ -1,0 +1,28 @@
+---
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends ansible-lint yamllint
+
+      - name: Run Ansible lint
+        run: ansible-lint -v .
+
+      - name: Run YAML lint
+        run: |
+          yamllint -f parsable -d "{extends: default, rules: {line-length: disable}}" .
