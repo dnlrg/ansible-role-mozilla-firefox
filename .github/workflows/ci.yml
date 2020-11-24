@@ -25,4 +25,4 @@ jobs:
 
       - name: Run YAML lint
         run: |
-          yamllint -f parsable -d "{extends: default, rules: {line-length: disable}}" .
+          yamllint -f parsable -d "{ignore: .github/, extends: default, rules: {line-length: disable}}" .
