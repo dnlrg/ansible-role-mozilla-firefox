@@ -16,6 +16,7 @@
     remote_src: true
     dest: /opt/mozilla
     creates: /opt/mozilla/firefox
+  become: true
   tags:
     - mozilla-firefox
 
