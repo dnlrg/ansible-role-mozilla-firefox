@@ -1,7 +1,7 @@
 ---
 - name: Ensure Mozilla Opt directory
   file:
-    name: /opt/mozilla
+    name: "{{ mozilla_firefox_dest }}"
     state: directory
     owner: root
     group: root
@@ -14,15 +14,15 @@
   unarchive:
     src: https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US
     remote_src: true
-    dest: /opt/mozilla
-    creates: /opt/mozilla/firefox
+    dest: "{{ mozilla_firefox_dest }}"
+    creates: "{{ mozilla_firefox_dest }}/firefox"
   become: true
   tags:
     - mozilla-firefox
 
 - name: Ensure user permissions for Firefox Opt directory
   file:
-    name: /opt/mozilla/firefox
+    name: "{{ mozilla_firefox_dest }}/firefox"
     state: directory
     owner: "{{ mozilla_firefox_user }}"
     group: "{{ mozilla_firefox_group }}"
@@ -33,7 +33,7 @@
 
 - name: Ensure user permissions for Firefox Opt files
   file:
-    name: /opt/mozilla/firefox
+    name: "{{ mozilla_firefox_dest }}/firefox"
     recurse: true
     state: directory
     owner: "{{ mozilla_firefox_user }}"
@@ -55,8 +55,8 @@
     - mozilla-firefox
 
 - name: Ensure Firefox Opt desktop file
-  copy:
-    src: firefox-opt.desktop
+  template:
+    src: firefox-opt.desktop.j2
     dest: /usr/local/share/applications/firefox-opt.desktop
     owner: "{{ mozilla_firefox_user }}"
     group: "{{ mozilla_firefox_group }}"
