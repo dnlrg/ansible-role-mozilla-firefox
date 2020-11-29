@@ -1,3 +1,5 @@
 ---
 mozilla_firefox_user: root
 mozilla_firefox_group: root
+mozilla_firefox_dest: /opt/mozilla
+mozilla_firefox_oom_score: 0
